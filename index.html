@@ -1,10 +1,1028 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <title>我的名片</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>罐罐 · 时光集</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #fcf7f2;
+      font-family: 'Segoe UI', 'Roboto', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      color: #3e2e2a;
+      line-height: 1.5;
+      padding: 1.5rem 1rem 0;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: rgba(255, 250, 245, 0.8);
+      backdrop-filter: blur(2px);
+      border-radius: 32px;
+      padding: 1.8rem 1.5rem;
+      box-shadow: 0 12px 28px rgba(180, 120, 100, 0.08), 0 4px 12px rgba(0, 0, 0, 0.02);
+      border: 1px solid rgba(230, 200, 185, 0.25);
+      transition: all 0.2s ease;
+      margin-bottom: 2rem;
+    }
+
+    .card:hover {
+      box-shadow: 0 18px 36px rgba(160, 110, 90, 0.10);
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 300;
+      border-bottom: 1px dashed #decbc0;
+      padding-bottom: 0.4rem;
+      margin-bottom: 1.2rem;
+      color: #5a423a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .section-title small {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: #a98a7a;
+      margin-left: auto;
+    }
+
+    .hero {
+      background: linear-gradient(145deg, #f7efe9, #fcf5ef);
+      border-radius: 48px 48px 32px 32px;
+      padding: 2rem 1.8rem 1.8rem;
+      margin-bottom: 2.2rem;
+      text-align: center;
+      position: relative;
+      border: 1px solid #f0e3da;
+      box-shadow: 0 8px 24px rgba(150, 110, 90, 0.08);
+    }
+
+    .hero-bg {
+      background-image: url('https://s41.ax1x.com/2026/06/25/pmNPv8O.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 40px;
+      padding: 1.2rem 0.5rem 0.5rem;
+      margin-bottom: 0.8rem;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .hero-quote {
+      font-size: 1.25rem;
+      font-weight: 300;
+      color: #3e2e28;
+      background: rgba(255, 245, 235, 0.7);
+      backdrop-filter: blur(2px);
+      padding: 0.6rem 1.8rem;
+      border-radius: 60px;
+      display: inline-block;
+      letter-spacing: 2px;
+      box-shadow: 0 2px 8px rgba(140, 100, 80, 0.04);
+      border: 1px solid rgba(220, 185, 165, 0.2);
+    }
+
+    .timer-area {
+      margin: 1.2rem 0 0.6rem;
+      font-size: 1.1rem;
+      background: rgba(240, 225, 215, 0.4);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      display: inline-block;
+      backdrop-filter: blur(2px);
+    }
+
+    .timer-number {
+      font-weight: 400;
+      background: #5a423a;
+      color: #fcf3eb;
+      padding: 0.1rem 0.8rem;
+      border-radius: 40px;
+      font-size: 1.2rem;
+      margin: 0 4px;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem 1rem;
+      margin: 1.5rem 0 0.2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #4d3932;
+      background: rgba(235, 215, 200, 0.4);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.95rem;
+      border: 1px solid rgba(200, 170, 155, 0.2);
+      backdrop-filter: blur(2px);
+      transition: all 0.2s;
+      letter-spacing: 0.5px;
+      font-weight: 350;
+    }
+
+    .nav-links a:hover {
+      background: #dcc9bc;
+      color: #2f211c;
+      border-color: #b39582;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(150, 110, 90, 0.08);
+    }
+
+    .profile-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 1.5rem;
+      margin: 0.5rem 0 0.2rem;
+    }
+
+    .profile-item {
+      background: #f6ede7;
+      padding: 0.3rem 1.2rem 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.95rem;
+      border: 1px solid #e3d2c7;
+      box-shadow: inset 0 1px 4px rgba(255, 245, 235, 0.6);
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .profile-item strong {
+      font-weight: 500;
+      color: #4d3730;
+    }
+
+    .profile-item span {
+      color: #6f5549;
+      font-weight: 350;
+    }
+
+    .ancient-poem {
+      background: #f3e7df;
+      padding: 0.8rem 1.8rem;
+      border-radius: 60px;
+      font-size: 1rem;
+      border-left: 3px solid #c7aa97;
+      margin: 0.8rem 0 0.2rem;
+      color: #3f312b;
+      font-style: italic;
+      display: inline-block;
+      letter-spacing: 1px;
+      box-shadow: 0 1px 6px rgba(160, 120, 100, 0.04);
+    }
+
+    .story-fragment {
+      background: #f9f1ea;
+      padding: 0.8rem 1.4rem;
+      border-radius: 24px;
+      margin-bottom: 0.8rem;
+      border-left: 6px solid #dac2b2;
+      position: relative;
+    }
+
+    .story-fragment .time-tag {
+      font-size: 0.8rem;
+      color: #9b7b6b;
+      letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    .story-fragment .delete-btn {
+      position: absolute;
+      top: 6px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: #c7aa97;
+      cursor: pointer;
+      font-size: 0.9rem;
+      opacity: 0.5;
+      transition: 0.15s;
+      padding: 0 6px;
+    }
+
+    .story-fragment .delete-btn:hover {
+      opacity: 1;
+      color: #d6655a;
+    }
+
+    .photo-wall {
+      column-count: 3;
+      column-gap: 14px;
+      margin: 0.5rem 0;
+    }
+
+    .photo-item {
+      break-inside: avoid;
+      margin-bottom: 14px;
+      background: #f3e7df;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(130, 100, 80, 0.04);
+      border: 1px solid #e5d4c8;
+      padding: 0.6rem 0.6rem 0.4rem;
+      transition: 0.15s;
+      position: relative;
+    }
+
+    .photo-item:hover {
+      transform: scale(1.01);
+      background: #f7ede6;
+    }
+
+    .photo-item .label {
+      font-size: 0.7rem;
+      color: #765b4d;
+      background: rgba(230, 210, 195, 0.5);
+      padding: 0.1rem 0.7rem;
+      border-radius: 30px;
+      display: inline-block;
+      margin: 0.2rem 0 0.3rem;
+    }
+
+    .photo-item .delete-photo {
+      position: absolute;
+      top: 4px;
+      right: 8px;
+      background: rgba(255,255,255,0.6);
+      border: none;
+      border-radius: 30px;
+      color: #a98a7a;
+      cursor: pointer;
+      font-size: 0.7rem;
+      padding: 0 8px;
+      opacity: 0.6;
+      transition: 0.15s;
+    }
+
+    .photo-item .delete-photo:hover {
+      opacity: 1;
+      color: #d6655a;
+    }
+
+    .photo-item img {
+      width: 100%;
+      border-radius: 16px;
+      display: block;
+    }
+
+    .whisper-block, .message-block {
+      background: #f6ede7;
+      padding: 1rem 1.4rem;
+      border-radius: 28px;
+      margin-bottom: 0.8rem;
+      border: 1px solid #e5d2c5;
+      position: relative;
+    }
+
+    .whisper-block .delete-btn,
+    .message-block .delete-btn {
+      position: absolute;
+      top: 6px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: #c7aa97;
+      cursor: pointer;
+      font-size: 0.9rem;
+      opacity: 0.4;
+      transition: 0.15s;
+      padding: 0 6px;
+    }
+
+    .whisper-block .delete-btn:hover,
+    .message-block .delete-btn:hover {
+      opacity: 1;
+      color: #d6655a;
+    }
+
+    .whisper-block small, .message-block small {
+      color: #9a7b6b;
+      display: block;
+      font-size: 0.7rem;
+      margin-top: 0.3rem;
+      letter-spacing: 0.3px;
+    }
+
+    .message-block .date-tag {
+      font-size: 0.7rem;
+      color: #9f7f6e;
+      margin-bottom: 0.2rem;
+      display: block;
+    }
+
+    .input-area {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+    }
+
+    .input-area input, .input-area textarea {
+      flex: 1;
+      min-width: 180px;
+      border-radius: 40px;
+      border: 1px solid #decbc0;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.95rem;
+      background: #fcf7f2;
+      font-family: inherit;
+      transition: 0.15s;
+    }
+
+    .input-area input:focus, .input-area textarea:focus {
+      outline: none;
+      border-color: #c7aa97;
+      box-shadow: 0 0 0 3px rgba(199, 170, 151, 0.15);
+    }
+
+    .input-area textarea {
+      border-radius: 20px;
+      resize: vertical;
+      min-height: 50px;
+    }
+
+    .input-area button {
+      background: #dcc9bc;
+      border: none;
+      border-radius: 40px;
+      padding: 0.5rem 1.6rem;
+      font-size: 0.95rem;
+      color: #2f211c;
+      cursor: pointer;
+      transition: 0.15s;
+      border: 1px solid #c7aa97;
+      touch-action: manipulation;
+      white-space: nowrap;
+    }
+
+    .input-area button:active {
+      transform: scale(0.94);
+    }
+
+    .input-area button:hover {
+      background: #ceb9aa;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px dashed #dfcdc0;
+      margin: 1.2rem 0 0.8rem;
+    }
+
+    .footer {
+      margin-top: 2.5rem;
+      padding: 1rem 0 1.8rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #8d7264;
+      border-top: 1px solid #e4d3c7;
+      letter-spacing: 1px;
+    }
+
+    .footer span {
+      background: #f4e8e0;
+      padding: 0.1rem 1rem;
+      border-radius: 40px;
+    }
+
+    /* 今天吃什么 */
+    .food-result {
+      font-size: 2.8rem;
+      font-weight: 300;
+      background: #f3e7df;
+      border-radius: 60px;
+      padding: 1.2rem 1rem;
+      min-height: 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed #decbc0;
+      margin-bottom: 1rem;
+      color: #3e2e2a;
+      transition: all 0.3s;
+      letter-spacing: 2px;
+    }
+
+    .food-btn {
+      background: #dcc9bc;
+      border: none;
+      border-radius: 60px;
+      padding: 0.8rem 3rem;
+      font-size: 1.4rem;
+      color: #2f211c;
+      box-shadow: 0 4px 12px rgba(140, 100, 80, 0.12);
+      transition: all 0.15s;
+      cursor: pointer;
+      touch-action: manipulation;
+      font-weight: 400;
+      letter-spacing: 2px;
+      border: 1px solid #c7aa97;
+    }
+
+    .food-btn:active {
+      transform: scale(0.94);
+    }
+
+    .food-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .food-edit-btn {
+      background: transparent;
+      border: 1px dashed #c7aa97;
+      border-radius: 60px;
+      padding: 0.4rem 1.2rem;
+      font-size: 0.85rem;
+      color: #6f5549;
+      cursor: pointer;
+      touch-action: manipulation;
+      margin-left: 0.6rem;
+      transition: 0.15s;
+    }
+
+    .food-edit-btn:hover {
+      background: #f3e7df;
+    }
+
+    .food-edit-area {
+      display: none;
+      margin-top: 1rem;
+      background: #f9f1ea;
+      border-radius: 28px;
+      padding: 1rem 1.2rem;
+      text-align: left;
+    }
+
+    .food-edit-area textarea {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid #decbc0;
+      padding: 0.6rem 1rem;
+      font-size: 0.95rem;
+      background: #fcf7f2;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    .food-save-btn {
+      background: #c7aa97;
+      border: none;
+      border-radius: 40px;
+      padding: 0.3rem 2rem;
+      color: #fff;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .food-cancel-btn {
+      background: transparent;
+      border: 1px solid #c7aa97;
+      border-radius: 40px;
+      padding: 0.3rem 2rem;
+      color: #6f5549;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .photo-upload-area {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin: 0.6rem 0 0.2rem;
+      align-items: center;
+    }
+
+    .photo-upload-area input[type="file"] {
+      flex: 1;
+      min-width: 150px;
+      font-size: 0.85rem;
+    }
+
+    .photo-upload-area select {
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      border: 1px solid #decbc0;
+      background: #fcf7f2;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 0.8rem 0.6rem 0; }
+      .card { padding: 1.2rem 0.8rem; }
+      .photo-wall { column-count: 2; }
+      .hero-quote { font-size: 1rem; padding: 0.4rem 1.2rem; }
+      .nav-links a { font-size: 0.8rem; padding: 0.2rem 0.8rem; }
+      .profile-grid { gap: 0.4rem; }
+      .profile-item { font-size: 0.8rem; padding: 0.1rem 0.8rem; }
+      .food-result { font-size: 2rem; min-height: 4rem; padding: 0.8rem; }
+      .food-btn { font-size: 1.1rem; padding: 0.6rem 2rem; }
+    }
+  </style>
 </head>
 <body>
-  <h1>你好</h1>
+<div class="container">
 
+  <!-- ===== 首页 ===== -->
+  <header class="hero" id="home">
+    <div class="hero-bg">
+      <div class="hero-quote">✨ 才识是岁月的冠冕，正如思念是我们共度的时间</div>
+      <div class="timer-area">
+        <span>🌸 相识 </span>
+        <span class="timer-number" id="dayCounter">--</span>
+        <span> 天 · 共度时光</span>
+      </div>
+    </div>
+    <nav class="nav-links">
+      <a href="#home">🏠 首页</a>
+      <a href="#profile">📖 罐罐档案</a>
+      <a href="#story">📜 罐罐故事</a>
+      <a href="#photo">🖼️ 罐罐相册</a>
+      <a href="#whisper">🤫 悄悄话</a>
+      <a href="#message">📝 留言板</a>
+      <a href="#foodPicker">🍜 吃什么</a>
+    </nav>
+  </header>
+
+  <!-- ===== 罐罐档案 ===== -->
+  <section class="card" id="profile">
+    <h2 class="section-title">📋 罐罐档案 <small>· 蛋蛋公主</small></h2>
+    <div class="profile-grid">
+      <div class="profile-item"><strong>昵称</strong> <span>官罐罐</span></div>
+      <div class="profile-item"><strong>专属外号</strong> <span>蛋蛋公主</span></div>
+      <div class="profile-item"><strong>喜好</strong> <span>美强惨 · 古风 · 甜食</span></div>
+    </div>
+    <div class="ancient-poem">
+      “ 官家有女初长成，晓露润花映日红。<br>蓓蕾含香待绽放，美目流盼韵无穷。”
+    </div>
+    <div style="margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 8px;">
+      <span class="profile-item" style="background: #ece0d7;">🌸 温柔</span>
+      <span class="profile-item" style="background: #ece0d7;">📖 书卷气</span>
+      <span class="profile-item" style="background: #ece0d7;">🎐 小确幸</span>
+    </div>
+  </section>
+
+  <!-- ===== 罐罐故事（互动版） ===== -->
+  <section class="card" id="story">
+    <h2 class="section-title">📖 罐罐故事 <small>· 大家一起写</small></h2>
+    <div id="storyContainer">
+      <!-- 动态渲染 -->
+    </div>
+    <div class="input-area">
+      <input type="text" id="storyInput" placeholder="✍️ 写下一段故事碎片..." style="flex:2;">
+      <input type="text" id="storyAuthor" placeholder="你的名字" style="flex:1; min-width:80px;" value="罐罐的朋友">
+      <button id="storyAddBtn">📌 添加</button>
+    </div>
+    <div style="color:#8f7363; font-size:0.8rem; margin-top: 0.4rem;">💡 每个人都可以留下故事碎片</div>
+  </section>
+
+  <!-- ===== 相册合集（互动版） ===== -->
+  <section class="card" id="photo">
+    <h2 class="section-title">🖼️ 相册合集 <small>· 回忆瀑布</small></h2>
+    <div class="photo-wall" id="photoWall">
+      <!-- 动态渲染 -->
+    </div>
+    <div class="photo-upload-area">
+      <input type="file" id="photoUpload" accept="image/*" multiple>
+      <select id="photoCategory">
+        <option value="📸 日常">📸 日常</option>
+        <option value="👫 合照">👫 合照</option>
+        <option value="💬 截图">💬 截图</option>
+        <option value="🎨 表情包">🎨 表情包</option>
+        <option value="🎄 节日">🎄 节日</option>
+        <option value="🤸 运动">🤸 运动</option>
+      </select>
+      <button id="photoUploadBtn">📤 上传照片</button>
+    </div>
+    <p style="font-size:0.8rem; color:#a4816e; margin-top:0.3rem;">✨ 上传的照片会保存在你的浏览器中</p>
+  </section>
+
+  <!-- ===== 悄悄话（互动版） ===== -->
+  <section class="card" id="whisper">
+    <h2 class="section-title">🤫 悄悄话 <small>· 匿名树洞</small></h2>
+    <div id="whisperContainer">
+      <!-- 动态渲染 -->
+    </div>
+    <div class="input-area">
+      <textarea id="whisperInput" placeholder="🤐 写下你想说的悄悄话..." rows="1"></textarea>
+      <button id="whisperAddBtn">💌 投递</button>
+    </div>
+    <div style="color:#8f7363; font-size:0.8rem; margin-top: 0.4rem;">💡 匿名投递，只有罐罐能看到</div>
+  </section>
+
+  <!-- ===== 留言板（互动版） ===== -->
+  <section class="card" id="message">
+    <h2 class="section-title">📝 留言板 <small>· 大家的留言</small></h2>
+    <div id="messageContainer">
+      <!-- 动态渲染 -->
+    </div>
+    <div class="input-area">
+      <input type="text" id="messageInput" placeholder="💬 写下你想说的话..." style="flex:2;">
+      <input type="text" id="messageAuthor" placeholder="你的名字" style="flex:1; min-width:80px;" value="小伙伴">
+      <button id="messageAddBtn">📝 留言</button>
+    </div>
+    <div style="color:#8f7363; font-size:0.8rem; margin-top: 0.4rem;">💡 留下你的足迹，罐罐会看到</div>
+  </section>
+
+  <!-- ===== 今天吃什么？ ===== -->
+  <section class="card" id="foodPicker">
+    <h2 class="section-title">🍜 今天吃什么？ <small>· 随机决策</small></h2>
+    <div style="text-align: center; padding: 0.5rem 0;">
+      <div class="food-result" id="foodResult">🎯 点击摇一摇</div>
+      <button class="food-btn" id="foodPickBtn">🎲 摇一摇！</button>
+      <button class="food-edit-btn" id="foodAddBtn">✏️ 编辑菜单</button>
+      <div class="food-edit-area" id="foodEditArea">
+        <p style="font-size: 0.9rem; color: #5a423a; margin-bottom: 0.5rem;">📝 每行一个选项：</p>
+        <textarea id="foodListInput" rows="5"></textarea>
+        <div style="display: flex; gap: 0.6rem; margin-top: 0.6rem; flex-wrap: wrap;">
+          <button class="food-save-btn" id="foodSaveBtn">💾 保存菜单</button>
+          <button class="food-cancel-btn" id="foodCancelBtn">取消</button>
+        </div>
+        <p style="font-size: 0.75rem; color: #9a7b6b; margin-top: 0.4rem;">💡 修改后保存，下次摇一摇生效</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 页脚 ===== -->
+  <footer class="footer">
+    <span>✨ 才识是岁月的冠冕，正如思念是我们共度的时间</span>
+    <br><br>
+    <span style="background: transparent; padding: 0;">⏳ 建站于 2026 年 · 罐罐时光集</span>
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  // ===== 工具：本地存储 =====
+  function getData(key, defaultVal) {
+    try {
+      const raw = localStorage.getItem('guanguan_' + key);
+      if (raw) return JSON.parse(raw);
+      return defaultVal;
+    } catch { return defaultVal; }
+  }
+  function setData(key, val) {
+    localStorage.setItem('guanguan_' + key, JSON.stringify(val));
+  }
+
+  // ===== 相识天数 =====
+  const startDate = new Date(2024, 0, 1);
+  const diffDays = Math.ceil((Date.now() - startDate) / (1000 * 60 * 60 * 24));
+  document.getElementById('dayCounter').textContent = diffDays > 0 ? diffDays : '0';
+
+  // ===== 1. 罐罐故事 =====
+  let stories = getData('stories', [
+    { id: 1, text: '天还没亮，球场只有运球声和呼吸。你投进一个三分，回头冲我笑，晨光刚好落在你肩头。', author: '罐罐', time: '2024.09' },
+    { id: 2, text: '一起啃黄瓜的傍晚，你说"等瘦下来要穿旗袍"，我偷偷记下了。', author: '罐罐', time: '2024.07' },
+    { id: 3, text: '突然暴雨，我们挤在奶茶店门口，耳机一人一半，放的是周杰伦的《晴天》。', author: '罐罐', time: '2024.06' }
+  ]);
+  let storyIdCounter = getData('storyIdCounter', 4);
+
+  function renderStories() {
+    const container = document.getElementById('storyContainer');
+    if (stories.length === 0) {
+      container.innerHTML = '<div style="color:#a98a7a; text-align:center; padding:0.5rem;">还没有故事，来写第一篇吧 📖</div>';
+      return;
+    }
+    container.innerHTML = stories.map(s => `
+      <div class="story-fragment">
+        <span class="time-tag">📅 ${s.time || '刚刚'} · ${s.author || '匿名'}</span>
+        <p>${s.text}</p>
+        <button class="delete-btn" data-id="${s.id}" data-type="story">✕</button>
+      </div>
+    `).join('');
+    // 删除事件
+    container.querySelectorAll('.delete-btn[data-type="story"]').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const id = parseInt(this.dataset.id);
+        stories = stories.filter(s => s.id !== id);
+        setData('stories', stories);
+        renderStories();
+      });
+    });
+  }
+
+  document.getElementById('storyAddBtn').addEventListener('click', function() {
+    const input = document.getElementById('storyInput');
+    const author = document.getElementById('storyAuthor');
+    const text = input.value.trim();
+    if (!text) { alert('写点内容吧 ✍️'); return; }
+    const newStory = {
+      id: storyIdCounter++,
+      text: text,
+      author: author.value.trim() || '罐罐的朋友',
+      time: new Date().toLocaleDateString('zh-CN')
+    };
+    stories.unshift(newStory);
+    setData('stories', stories);
+    setData('storyIdCounter', storyIdCounter);
+    input.value = '';
+    renderStories();
+  });
+
+  // ===== 2. 相册（图片用base64存储，注意大小限制） =====
+  let photos = getData('photos', [
+    { id: 1, src: 'https://s41.ax1x.com/2026/06/25/pmNp2E6.jpg', label: '👩‍🎓 懵懂初遇', category: '📸 日常' },
+    { id: 2, src: 'https://s41.ax1x.com/2026/06/25/pmN9nM9.jpg', label: '👫 合照', category: '👫 合照' },
+    { id: 3, src: 'https://s41.ax1x.com/2026/06/25/pmNS9zj.jpg', label: '📸 抓拍日常', category: '📸 日常' },
+    { id: 4, src: 'https://s41.ax1x.com/2026/06/25/pmN91IK.png', label: '🤗 专属表情包', category: '🎨 表情包' },
+    { id: 5, src: 'https://s41.ax1x.com/2026/06/25/pmN98PO.jpg', label: '🤸 运动剪影', category: '🤸 运动' },
+    { id: 6, src: 'https://s41.ax1x.com/2026/06/25/pmN9UsA.jpg', label: '🎗 红丝祈福', category: '🎄 节日' }
+  ]);
+  let photoIdCounter = getData('photoIdCounter', 7);
+
+  function renderPhotos() {
+    const wall = document.getElementById('photoWall');
+    if (photos.length === 0) {
+      wall.innerHTML = '<div style="color:#a98a7a; text-align:center; padding:1rem; column-span:all;">还没有照片，上传一些吧 📸</div>';
+      return;
+    }
+    wall.innerHTML = photos.map(p => `
+      <div class="photo-item">
+        <img src="${p.src}" alt="${p.label}" loading="lazy">
+        <span class="label">${p.category || '📸'} ${p.label || ''}</span>
+        <button class="delete-photo" data-id="${p.id}">✕</button>
+      </div>
+    `).join('');
+    wall.querySelectorAll('.delete-photo').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const id = parseInt(this.dataset.id);
+        photos = photos.filter(p => p.id !== id);
+        setData('photos', photos);
+        renderPhotos();
+      });
+    });
+  }
+
+  document.getElementById('photoUploadBtn').addEventListener('click', function() {
+    const input = document.getElementById('photoUpload');
+    const category = document.getElementById('photoCategory').value;
+    const files = input.files;
+    if (!files || files.length === 0) { alert('请先选择照片 📷'); return; }
+    
+    let loaded = 0;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (file.size > 2 * 1024 * 1024) {
+        alert('图片 ' + file.name + ' 超过2MB，请压缩后上传');
+        continue;
+      }
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const newPhoto = {
+          id: photoIdCounter++,
+          src: e.target.result,
+          label: file.name.replace(/\.[^.]+$/, ''),
+          category: category
+        };
+        photos.push(newPhoto);
+        if (loaded === files.length - 1 || i === files.length - 1) {
+          setData('photos', photos);
+          setData('photoIdCounter', photoIdCounter);
+          renderPhotos();
+          input.value = '';
+        }
+        loaded++;
+      };
+      reader.readAsDataURL(file);
+    }
+    // 如果只有一张图，上面逻辑会处理
+    if (files.length === 1) {
+      // 已经在循环中处理
+    }
+    // 简单处理：如果有多张，用计数器
+  });
+
+  // ===== 3. 悄悄话 =====
+  let whispers = getData('whispers', [
+    { id: 1, text: '多亏了罐罐老师，我的普通话才能二甲 🎉', time: '2026.06' },
+    { id: 2, text: '多谢罐罐教练带着我一起锻炼，减肥大成功！虽然暑假又吃回去了 😂', time: '2026.06' },
+    { id: 3, text: '备考好累哦，还好有罐罐陪着 🥺', time: '2026.05' }
+  ]);
+  let whisperIdCounter = getData('whisperIdCounter', 4);
+
+  function renderWhispers() {
+    const container = document.getElementById('whisperContainer');
+    if (whispers.length === 0) {
+      container.innerHTML = '<div style="color:#a98a7a; text-align:center; padding:0.5rem;">还没有悄悄话，投递第一封吧 💌</div>';
+      return;
+    }
+    container.innerHTML = whispers.map(w => `
+      <div class="whisper-block">
+        <p>${w.text}</p>
+        <small>🔮 匿名小伙伴 · ${w.time || '刚刚'}</small>
+        <button class="delete-btn" data-id="${w.id}" data-type="whisper">✕</button>
+      </div>
+    `).join('');
+    container.querySelectorAll('.delete-btn[data-type="whisper"]').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const id = parseInt(this.dataset.id);
+        whispers = whispers.filter(w => w.id !== id);
+        setData('whispers', whispers);
+        renderWhispers();
+      });
+    });
+  }
+
+  document.getElementById('whisperAddBtn').addEventListener('click', function() {
+    const input = document.getElementById('whisperInput');
+    const text = input.value.trim();
+    if (!text) { alert('写点悄悄话吧 🤫'); return; }
+    const newWhisper = {
+      id: whisperIdCounter++,
+      text: text,
+      time: new Date().toLocaleDateString('zh-CN')
+    };
+    whispers.unshift(newWhisper);
+    setData('whispers', whispers);
+    setData('whisperIdCounter', whisperIdCounter);
+    input.value = '';
+    renderWhispers();
+  });
+
+  // ===== 4. 留言板 =====
+  let messages = getData('messages', [
+    { id: 1, text: '建站第一天！想把所有温暖的瞬间都装在这里 💕', author: '罐罐', time: '2026.06.25' },
+    { id: 2, text: '今天吃到很甜的荔枝，想起你上次剥荔枝的样子 🍉', author: '罐罐', time: '2026.06.20' },
+    { id: 3, text: '罐罐🥫其实我一直是你的粉丝✨从第一卷就开始了 💘', author: '小迷妹', time: '2026.05.27' }
+  ]);
+  let messageIdCounter = getData('messageIdCounter', 4);
+
+  function renderMessages() {
+    const container = document.getElementById('messageContainer');
+    if (messages.length === 0) {
+      container.innerHTML = '<div style="color:#a98a7a; text-align:center; padding:0.5rem;">还没有留言，来写下第一条吧 📝</div>';
+      return;
+    }
+    container.innerHTML = messages.map(m => `
+      <div class="message-block">
+        <span class="date-tag">📌 ${m.time || '刚刚'} · ${m.author || '匿名'}</span>
+        <p>${m.text}</p>
+        <button class="delete-btn" data-id="${m.id}" data-type="message">✕</button>
+      </div>
+    `).join('');
+    container.querySelectorAll('.delete-btn[data-type="message"]').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const id = parseInt(this.dataset.id);
+        messages = messages.filter(m => m.id !== id);
+        setData('messages', messages);
+        renderMessages();
+      });
+    });
+  }
+
+  document.getElementById('messageAddBtn').addEventListener('click', function() {
+    const input = document.getElementById('messageInput');
+    const author = document.getElementById('messageAuthor');
+    const text = input.value.trim();
+    if (!text) { alert('写点留言吧 💬'); return; }
+    const newMessage = {
+      id: messageIdCounter++,
+      text: text,
+      author: author.value.trim() || '小伙伴',
+      time: new Date().toLocaleDateString('zh-CN')
+    };
+    messages.unshift(newMessage);
+    setData('messages', messages);
+    setData('messageIdCounter', messageIdCounter);
+    input.value = '';
+    renderMessages();
+  });
+
+  // ===== 5. 今天吃什么 =====
+  const DEFAULT_FOODS = [
+    '🍜 兰州拉面', '🍚 黄焖鸡米饭', '🥘 麻辣香锅', '🍣 寿司',
+    '🍔 汉堡', '🌮 煎饼果子', '🍲 火锅', '🥗 轻食沙拉',
+    '🍛 咖喱饭', '🥟 饺子', '🍝 意大利面', '🍱 日式便当',
+    '🌯 卷饼', '🍜 螺蛳粉', '🍗 炸鸡'
+  ];
+  let foodList = getData('foodList', DEFAULT_FOODS);
+  const foodResult = document.getElementById('foodResult');
+  const foodPickBtn = document.getElementById('foodPickBtn');
+  const foodAddBtn = document.getElementById('foodAddBtn');
+  const foodEditArea = document.getElementById('foodEditArea');
+  const foodListInput = document.getElementById('foodListInput');
+  const foodSaveBtn = document.getElementById('foodSaveBtn');
+  const foodCancelBtn = document.getElementById('foodCancelBtn');
+  let isRolling = false;
+  let rollInterval = null;
+
+  function updateFoodInput() {
+    foodListInput.value = foodList.join('\n');
+  }
+
+  function pickFood() {
+    if (isRolling) return;
+    if (!foodList || foodList.length === 0) {
+      foodResult.textContent = '😅 菜单是空的，快添加一些吧！';
+      return;
+    }
+    isRolling = true;
+    foodPickBtn.disabled = true;
+    let count = 0;
+    const maxRolls = 15 + Math.floor(Math.random() * 10);
+    let lastIndex = -1;
+    rollInterval = setInterval(() => {
+      let idx;
+      do {
+        idx = Math.floor(Math.random() * foodList.length);
+      } while (idx === lastIndex && foodList.length > 1);
+      lastIndex = idx;
+      foodResult.textContent = foodList[idx];
+      foodResult.style.transform = 'scale(0.95)';
+      setTimeout(() => { foodResult.style.transform = 'scale(1)'; }, 50);
+      count++;
+      if (count >= maxRolls) {
+        clearInterval(rollInterval);
+        const finalIdx = Math.floor(Math.random() * foodList.length);
+        foodResult.textContent = '🎉 ' + foodList[finalIdx];
+        foodResult.style.borderColor = '#c7aa97';
+        isRolling = false;
+        foodPickBtn.disabled = false;
+      }
+    }, 60 + Math.random() * 40);
+  }
+
+  function saveFoodList() {
+    const lines = foodListInput.value.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+    if (lines.length === 0) { alert('至少保留一个选项哦！'); return; }
+    foodList = lines;
+    setData('foodList', foodList);
+    foodEditArea.style.display = 'none';
+    foodResult.textContent = '✅ 菜单已更新！试试摇一摇';
+    foodResult.style.borderColor = '#decbc0';
+  }
+
+  foodPickBtn.addEventListener('click', pickFood);
+  foodAddBtn.addEventListener('click', () => {
+    const isHidden = foodEditArea.style.display === 'none';
+    foodEditArea.style.display = isHidden ? 'block' : 'none';
+    if (isHidden) updateFoodInput();
+  });
+  foodSaveBtn.addEventListener('click', saveFoodList);
+  foodCancelBtn.addEventListener('click', () => { foodEditArea.style.display = 'none'; });
+  if (foodList.length === 0) {
+    foodResult.textContent = '🍽️ 点击"编辑菜单"添加美食吧！';
+  }
+
+  // ===== 初始化渲染 =====
+  renderStories();
+  renderPhotos();
+  renderWhispers();
+  renderMessages();
+
+  // 回车快捷提交
+  document.getElementById('storyInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      document.getElementById('storyAddBtn').click();
+    }
+  });
+  document.getElementById('whisperInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      document.getElementById('whisperAddBtn').click();
+    }
+  });
+  document.getElementById('messageInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      document.getElementById('messageAddBtn').click();
+    }
+  });
+
+  // 清理照片输入
+  document.getElementById('photoUpload').addEventListener('change', function() {
+    // 自动上传（可选）
+  });
+
+  console.log('✨ 罐罐时光集已加载！所有数据保存在你的浏览器中。');
+})();
+</script>
 </body>
 </html>
